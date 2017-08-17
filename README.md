@@ -37,3 +37,8 @@ See the docstrings for `minimize-weight` for further details.
 Install [Leiningen](https://github.com/technomancy/leiningen) then
 
 `lein javac && lein jar`
+
+## Deploying
+
+`lein release`
+(or `lein deploy clojars` if you already have the correct version number set)
