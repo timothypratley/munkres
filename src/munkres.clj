@@ -43,3 +43,13 @@
     (AssignmentProblemDense.)
     (as-> x {:assignments (assignments x agents tasks)
              :weight (.weight x)})))
+
+(defn maximize-weight
+  "Assigns tasks to agents maximizing the weight. `weights` can either
+   be a weight matrix or a function that takes agent-task pairs."
+  [weights agents tasks]
+  (-> weights
+    (to-weight-matrix agents tasks)
+    (mat/negate)
+    (minimize-weight agents tasks)
+    (update :weight -)))

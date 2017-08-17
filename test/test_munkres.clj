@@ -56,4 +56,25 @@
                         :agent2 :task1}
           :weight 4.0})))
 
+(deftest maximize-weight-test
+  (is (= (maximize-weight [] [] [])
+         {:assignments {}, :weight 0.0}))
+  (is (= (maximize-weight weight-f [] [])
+         {:assignments {}, :weight 0.0}))
+  (is (= (maximize-weight weight-f [:agent1] [])
+         {:assignments {}, :weight 0.0}))
+  (is (= (maximize-weight weight-f [] [:task1])
+         {:assignments {}, :weight 0.0}))
+  (is (= (maximize-weight weight-f
+                          [:agent1 :agent2]
+                          [:task1])
+         {:assignments {:agent2 :task1},
+          :weight 3.0}))
+  (is (= (maximize-weight weight-f
+                          [:agent1 :agent2]
+                          [:task1 :task2])
+         {:assignments {:agent1 :task1
+                        :agent2 :task2}
+          :weight 6.0})))
+
 (run-tests)
