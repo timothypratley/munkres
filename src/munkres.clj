@@ -27,7 +27,9 @@
   (->> (range (count agents))
     (map #(.sol assign-prob %))
     (map #(nth tasks % nil))
-    (zipmap agents)))
+    (zipmap agents)
+    (filter (comp some? val))
+    (into {})))
 
 (defn minimize-weight
   "Assigns tasks to agents minimizing the weight. `weights` can either
