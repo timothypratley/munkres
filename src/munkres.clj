@@ -53,3 +53,8 @@
     (mat/negate)
     (minimize-weight agents tasks)
     (update :weight -)))
+
+(defn ^{:deprecated "0.1.0"} solve
+  "Deprecated, please use minimize-weight instead."
+  [agents tasks matrix]
+  (minimize-weight matrix agents tasks))

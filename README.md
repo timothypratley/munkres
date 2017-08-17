@@ -7,12 +7,33 @@ for use from [Clojure](http://clojure.org)
 ## Usage
 Add this to your project.clj `:dependencies`
 
-`[munkres "0.1.0"]`
+`[munkres "0.2.0"]`
 
+Require it from your source code
+
+```clojure
+(ns my-ns
+  (:require [munkres :as m]))
+```
+
+And call it like so:
+
+```clojure
+(m/minimize-weight [[2 1] [3 4]]
+                   [:agent1 :agent2]
+                   [:task1 :task2])
+```
+Which will result in the assignments:
+```clojure
+{:assignments {:agent1 :task2
+               :agent2 :task1}
+ :weight 4.0}
+```
+
+See the docstrings for `minimize-weight` for further details.
 
 ## Building
 
-`lein javac`
-`lein jar`
+Install [Leiningen](https://github.com/technomancy/leiningen) then
 
-[Leiningen](https://github.com/technomancy/leiningen)
+`lein javac && lein jar`
