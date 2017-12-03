@@ -1,6 +1,9 @@
 (ns munkres
   "The Hungarian method is a combinatorial optimization algorithm that solves the assignment problem."
-  (:require [clojure.core.matrix :as mat]))
+  (:require [clojure.core.matrix :as mat])
+  (:import [edu.princeton.cs.algs4 AssignmentProblem]))
+
+(set! *warn-on-reflection* true)
 
 (defn weight-matrix
   "Calculates a weight matrix if you have a function to calculate weights for agent-task pairs."
@@ -23,36 +26,36 @@
 
 (defn- assignments
   "Extracts the assignments from an AssignmentProblemDense instance."
-  [assign-prob agents tasks]
+  [^AssignmentProblem assign-prob agents tasks]
   (->> (range (count agents))
-    (map #(.sol assign-prob %))
-    (map #(nth tasks % nil))
-    (zipmap agents)
-    (filter (comp some? val))
-    (into {})))
+       (map #(.sol assign-prob %))
+       (map #(nth tasks % nil))
+       (zipmap agents)
+       (filter (comp some? val))
+       (into {})))
 
 (defn minimize-weight
   "Assigns tasks to agents minimizing the weight. `weights` can either
    be a weight matrix or a function that takes agent-task pairs."
   [weights agents tasks]
   (-> weights
-    (to-weight-matrix agents tasks)
-    (mat/reshape (repeat 2 (max (count agents)
-                                (count tasks))))
-    (double-array-2d)
-    (AssignmentProblemDense.)
-    (as-> x {:assignments (assignments x agents tasks)
-             :weight (.weight x)})))
+      (to-weight-matrix agents tasks)
+      (mat/reshape (repeat 2 (max (count agents)
+                                  (count tasks))))
+      (double-array-2d)
+      (AssignmentProblem.)
+      (as-> x {:assignments (assignments x agents tasks)
+               :weight (.weight x)})))
 
 (defn maximize-weight
   "Assigns tasks to agents maximizing the weight. `weights` can either
    be a weight matrix or a function that takes agent-task pairs."
   [weights agents tasks]
   (-> weights
-    (to-weight-matrix agents tasks)
-    (mat/negate)
-    (minimize-weight agents tasks)
-    (update :weight -)))
+      (to-weight-matrix agents tasks)
+      (mat/negate)
+      (minimize-weight agents tasks)
+      (update :weight -)))
 
 (defn ^{:deprecated "0.1.0"} solve
   "Deprecated, please use minimize-weight instead."

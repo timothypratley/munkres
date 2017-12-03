@@ -77,4 +77,11 @@
                         :agent2 :task2}
           :weight 6.0})))
 
+(deftest testcase1
+  (let [[as bs] (read-string (slurp "test/testcase1.edn"))]
+    (is (= (Math/round (:weight (minimize-weight (fn [a b]
+                                                   (Math/abs ^double (- a b)))
+                                                 as bs)))
+           695196))))
+
 (run-tests)
