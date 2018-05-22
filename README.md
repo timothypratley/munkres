@@ -7,7 +7,7 @@ for use from [Clojure](http://clojure.org)
 ## Usage
 Add this to your project.clj `:dependencies`
 
-`[munkres "0.2.0"]`
+`[munkres "0.4.0"]`
 
 Require it from your source code
 

@@ -47,8 +47,7 @@
         (double-array-2d)
         (AssignmentProblem.)
         (as-> x {:assignments (assignments x agents tasks)
-                 :weight (.weight x)})))
-  )
+                 :weight (.weight x)}))))
 
 (defn maximize-weight
   "Assigns tasks to agents maximizing the weight. `weights` can either

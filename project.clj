@@ -1,4 +1,4 @@
-(defproject munkres "0.4.0-SNAPSHOT"
+(defproject munkres "0.4.0"
   :description "Munkres-Kuhn (Hungarian) algorithm wrapper"
   :url "https://github.com/timothypratley/munkres"
   :license "GNU General Public License, version 3 (GPLv3)"
