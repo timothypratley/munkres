@@ -38,24 +38,30 @@
   "Assigns tasks to agents minimizing the weight. `weights` can either
    be a weight matrix or a function that takes agent-task pairs."
   [weights agents tasks]
-  (-> weights
-      (to-weight-matrix agents tasks)
-      (mat/reshape (repeat 2 (max (count agents)
-                                  (count tasks))))
-      (double-array-2d)
-      (AssignmentProblem.)
-      (as-> x {:assignments (assignments x agents tasks)
-               :weight (.weight x)})))
+  (let [agents (vec agents)
+        tasks (vec tasks)]
+    (-> weights
+        (to-weight-matrix agents tasks)
+        (mat/reshape (repeat 2 (max (count agents)
+                                    (count tasks))))
+        (double-array-2d)
+        (AssignmentProblem.)
+        (as-> x {:assignments (assignments x agents tasks)
+                 :weight (.weight x)})))
+  )
 
 (defn maximize-weight
   "Assigns tasks to agents maximizing the weight. `weights` can either
    be a weight matrix or a function that takes agent-task pairs."
   [weights agents tasks]
-  (-> weights
-      (to-weight-matrix agents tasks)
-      (mat/negate)
-      (minimize-weight agents tasks)
-      (update :weight -)))
+  (let [agents (vec agents)
+        tasks (vec tasks)]
+    (-> weights
+        (to-weight-matrix agents tasks)
+        (mat/negate)
+        (minimize-weight agents tasks)
+        (update :weight -)
+        (update :weight max 0.0))))
 
 (defn ^{:deprecated "0.1.0"} solve
   "Deprecated, please use minimize-weight instead."

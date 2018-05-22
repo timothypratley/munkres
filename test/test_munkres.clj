@@ -54,7 +54,9 @@
                           [:task1 :task2])
          {:assignments {:agent1 :task2
                         :agent2 :task1}
-          :weight 4.0})))
+          :weight 4.0}))
+  (is (= (minimize-weight [0] #{:agent} #{:task})
+         {:assignments {:agent :task}, :weight 0.0})))
 
 (deftest maximize-weight-test
   (is (= (maximize-weight [] [] [])
@@ -75,7 +77,9 @@
                           [:task1 :task2])
          {:assignments {:agent1 :task1
                         :agent2 :task2}
-          :weight 6.0})))
+          :weight 6.0}))
+  (is (= (str (:weight (maximize-weight [] [] [])))
+         "0.0")))
 
 (deftest testcase1
   (let [[as bs] (read-string (slurp "test/testcase1.edn"))]
