@@ -59,8 +59,7 @@
         (to-weight-matrix agents tasks)
         (mat/negate)
         (minimize-weight agents tasks)
-        (update :weight -)
-        (update :weight max 0.0))))
+        (update :weight #(if (= 0.0 %) 0.0 (- %))))))
 
 (defn ^{:deprecated "0.1.0"} solve
   "Deprecated, please use minimize-weight instead."
